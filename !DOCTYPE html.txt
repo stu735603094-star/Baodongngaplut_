@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Đồ Tương Tác Ngập Lụt - THPT Trần Suyền</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: #f0f4f8; display: flex; flex-direction: column; align-items: center; color: #333; }
+        .header { background: #004a8c; color: white; width: 100%; text-align: center; padding: 20px 0; border-bottom: 4px solid #ff9800; }
+        
+        .controls { margin: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        button { padding: 12px 20px; cursor: pointer; border: 1px solid #004a8c; border-radius: 30px; background: white; font-weight: bold; color: #004a8c; transition: 0.3s; }
+        button.active { background: #004a8c; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+        .map-container { position: relative; width: 95%; max-width: 1000px; background: white; padding: 10px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .map-layer { width: 100%; height: auto; display: none; border-radius: 8px; }
+        .map-layer.active { display: block; animation: fadeIn 0.5s; }
+
+        .mission-box { margin: 20px; padding: 25px; background: #fff; border-left: 8px solid #e91e63; max-width: 900px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .mission-title { font-size: 1.3em; font-weight: bold; color: #e91e63; margin-bottom: 10px; display: flex; align-items: center; }
+        #guide-text { font-size: 1.15em; line-height: 1.7; color: #444; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>HỆ THỐNG TƯƠNG TÁC BẢN ĐỒ LŨ LỤT</h1>
+    <p>Dành cho học sinh trường THPT Trần Suyền - Phú Hòa</p>
+</div>
+
+<div class="controls">
+    <button onclick="changeContent('gt', this)" class="active">Giao thông</button>
+    <button onclick="changeContent('dh', this)">Địa hình</button>
+    <button onclick="changeContent('c1', this)">Báo động 1</button>
+    <button onclick="changeContent('c2', this)">Báo động 2</button>
+    <button onclick="changeContent('c3', this)">Báo động 3</button>
+</div>
+
+<div class="map-container">
+    <img src="GTHONG..png" id="gt" class="map-layer active">
+    <img src="DEM (1).png" id="dh" class="map-layer">
+    <img src="BDC1.png" id="c1" class="map-layer">
+    <img src="BDC2.png" id="c2" class="map-layer">
+    <img src="CAP3 (1).png" id="c3" class="map-layer">
+</div>
+
+<div class="mission-box">
+    <div class="mission-title">🎯 NHIỆM VỤ DÀNH CHO HỌC SINH:</div>
+    <div id="guide-text">
+        Hãy quan sát mạng lưới giao thông chính. Xác định vị trí của trường THPT Trần Suyền so với các trục đường chính như QL25 và đường cao tốc.
+    </div>
+</div>
+
+<script>
+    const missions = {
+        'gt': 'Hãy quan sát mạng lưới giao thông chính. Xác định vị trí của trường THPT Trần Suyền so với các trục đường chính như QL25 và đường cao tốc.',
+        'dh': '<b>Nhiệm vụ:</b> Quan sát bản đồ cao trình. Em hãy tìm ra các vùng đất cao (màu nhạt/trắng) không bị ảnh hưởng bởi sông Ba. Khu vực nào có thể dùng làm nơi sơ tán tập trung?',
+        'c1': '<b>Nhiệm vụ:</b> Nước bắt đầu lên. Em hãy tìm và vẽ ra tuyến đường ngắn nhất từ <b>trường THPT Trần Suyền</b> di chuyển đến các điểm cao an toàn mà em vừa tìm thấy ở bản đồ địa hình.',
+        'c2': '<b>Cảnh báo:</b> Nước lũ dâng cao, nhiều tuyến đường đã bị ngập sâu. Em hãy kiểm tra xem tuyến đường ở Báo động 1 còn đi được không? Nếu bị chặn, hãy tìm hướng di chuyển dự phòng.',
+        'c3': '<b>Tình huống khẩn cấp:</b> Hầu hết các tuyến đường giao thông đã bị chia cắt hoàn toàn. Trong tình huống này, phương án di chuyển bằng đường bộ không còn khả thi, em hãy đề xuất phương án ứng phó khác (ví dụ: cứu hộ đường thủy, di chuyển lên tầng cao tại chỗ...).'
+    };
+
+    function changeContent(id, btn) {
+        // Hiện ảnh tương ứng
+        document.querySelectorAll('.map-layer').forEach(img => img.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        
+        // Thay đổi nội dung hướng dẫn
+        document.getElementById('guide-text').innerHTML = missions[id];
+
+        // Đổi màu nút
+        document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
